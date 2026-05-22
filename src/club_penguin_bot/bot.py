@@ -144,7 +144,7 @@ class Bot:
     @retry(
         retry=retry_if_exception_type(ValueError),
         stop=stop_after_attempt(3),
-        wait=wait_fixed(1),
+        wait=wait_fixed(5),
         reraise=True,
     )
     def _validate_loaded(self) -> None:
@@ -152,8 +152,13 @@ class Bot:
         if coordinates is None:
             raise ValueError("Page did not load: message button not found.")
 
+    @retry(
+        retry=retry_if_exception_type(ValueError),
+        stop=stop_after_attempt(3),
+        wait=wait_fixed(2),
+        reraise=True,
+    )
     def _travel_via_map(self, destination_template: Template) -> None:
-        self._open_map()
         clicked = self.click_template(destination_template, delay=1600)
         if not clicked:
             raise ValueError(
@@ -161,45 +166,59 @@ class Bot:
             )
 
     def _travel_to_dojo_courtyard(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.DOJO_COURTYARD_MAP)
 
     def _travel_to_forest(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.FOREST_MAP)
 
     def _travel_to_iceberg(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.ICEBERG_MAP)
 
     def _travel_to_skii_hill(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.SKII_HILL_MAP)
 
     def _travel_to_skii_village(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.SKII_VILLAGE_MAP)
 
     def _travel_to_snow_forts(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.SNOW_FORTS_MAP)
 
     def _travel_to_stadium(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.STADIUM_MAP)
 
     def _travel_to_the_beach(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.THE_BEACH_MAP)
 
     def _travel_to_the_cove(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.THE_COVE_MAP)
 
     def _travel_to_the_dock(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.THE_DOCK_MAP)
 
     def _travel_to_the_plaza(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.THE_PLAZA_MAP)
 
     def _travel_to_mine(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.MINE_MAP)
 
     def _travel_to_nightclub(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.NIGHTCLUB_MAP)
 
     def _travel_to_welcome_room(self) -> None:
+        self._open_map()
         self._travel_via_map(Template.WELCOME_ROOM_MAP)
 
     def login(self, username: str, password: str, server: str) -> None:
