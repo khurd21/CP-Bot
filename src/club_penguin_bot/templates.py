@@ -24,3 +24,9 @@ class Template(StrEnum):
     MINE_MAP = "mine-map.png"
     NIGHTCLUB_MAP = "nightclub-map.png"
     WELCOME_ROOM_MAP = "welcome-room-map.png"
+
+    ROCK_THE_BEACH = "rock-the-beach.png"
+    LIGHT_ABOVE_DOOR_THE_BEACH = "light-above-door-the-beach.png"
+    SEVEN_LIGHTHOUSE = "seven-lighthouse.png"
+    TO_TOP_SIGN_LIGHTHOUSE = "to-top-sign-lighthouse.png"
+    TELESCOPE_BEACON = "telescope-beacon.png"

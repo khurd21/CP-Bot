@@ -86,6 +86,17 @@ class Bot:
         height, width = template.shape[:2]
         return (max_loc[0] + width // 2, max_loc[1] + height // 2)
 
+    @retry(
+        retry=retry_if_result(lambda result: result is None),
+        stop=stop_after_attempt(3),
+        wait=wait_fixed(2),
+        retry_error_callback=lambda state: None,
+    )
+    def find_template_retry(
+        self, template_name: Template, threshold: float = 0.85
+    ) -> Optional[tuple[int, int]]:
+        return self.find_template(template_name, threshold=threshold)
+
     def click_template(self, template_name: Template, delay: int = 500) -> bool:
         if self.page is None:
             raise ValueError("Page is None.")
@@ -122,6 +133,8 @@ class Bot:
             Destination.MINE: self._travel_to_mine,
             Destination.NIGHTCLUB: self._travel_to_nightclub,
             Destination.WELCOME_ROOM: self._travel_to_welcome_room,
+            Destination.LIGHTHOUSE: self._travel_to_lighthouse,
+            Destination.BEACON: self._travel_to_beacon,
         }
 
         handler = route_handlers.get(destination)
@@ -220,6 +233,25 @@ class Bot:
     def _travel_to_welcome_room(self) -> None:
         self._open_map()
         self._travel_via_map(Template.WELCOME_ROOM_MAP)
+
+    def _travel_to_lighthouse(self) -> None:
+        self._travel_to_the_beach()
+        self.click_template(Template.ROCK_THE_BEACH)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        self.click_template(Template.LIGHT_ABOVE_DOOR_THE_BEACH)
+        self.page.wait_for_timeout(3000)
+        coordinates = self.find_template_retry(Template.SEVEN_LIGHTHOUSE)
+        if coordinates is None:
+            raise ValueError("Could not confirm lighthouse room loaded.")
+
+    def _travel_to_beacon(self) -> None:
+        self._travel_to_lighthouse()
+        self.click_template(Template.TO_TOP_SIGN_LIGHTHOUSE)
+        coordinates = self.find_template_retry(Template.TELESCOPE_BEACON)
+        if coordinates is None:
+            raise ValueError("Could not confirm beacon room loaded.")
 
     def login(self, username: str, password: str, server: str) -> None:
         if self.page is None:

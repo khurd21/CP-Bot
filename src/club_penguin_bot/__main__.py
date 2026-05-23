@@ -17,7 +17,9 @@ def main():
     with Bot(url=url) as bot:
         bot.login(user, password, server)
         travel(bot, Destination.DOJO_COURTYARD)
+        travel(bot, Destination.LIGHTHOUSE)
         travel(bot, Destination.FOREST)
+        travel(bot, Destination.BEACON)
         travel(bot, Destination.ICEBERG)
         travel(bot, Destination.MINE)
         travel(bot, Destination.SKII_HILL)

@@ -16,3 +16,5 @@ class Destination(StrEnum):
     MINE = "mine"
     NIGHTCLUB = "nightclub"
     WELCOME_ROOM = "welcome_room"
+    LIGHTHOUSE = "lighthouse"
+    BEACON = "beacon"
