@@ -131,10 +131,15 @@ class Bot:
             Destination.THE_DOCK: self._travel_to_the_dock,
             Destination.THE_PLAZA: self._travel_to_the_plaza,
             Destination.MINE: self._travel_to_mine,
-            Destination.NIGHTCLUB: self._travel_to_nightclub,
+            Destination.THE_TOWN: self._travel_to_the_town,
             Destination.WELCOME_ROOM: self._travel_to_welcome_room,
             Destination.LIGHTHOUSE: self._travel_to_lighthouse,
             Destination.BEACON: self._travel_to_beacon,
+            Destination.SKII_LODGE: self._travel_to_skii_lodge,
+            Destination.SKII_LODGE_ATTIC: self._travel_to_skii_lodge_attic,
+            Destination.NIGHTCLUB: self._travel_to_nightclub,
+            Destination.LOUNGE: self._travel_to_lounge,
+            Destination.SPY_HEADQUARTERS: self._travel_to_spy_headquarters,
         }
 
         handler = route_handlers.get(destination)
@@ -153,6 +158,9 @@ class Bot:
         opened = self.click_template(Template.MAP_BUTTON, delay=700)
         if not opened:
             raise ValueError("Could not find map button.")
+        coordinates = self.find_template_retry(Template.DOJO_COURTYARD_MAP)
+        if coordinates is None:
+            raise ValueError("Could not confirm map opened.")
 
     @retry(
         retry=retry_if_exception_type(ValueError),
@@ -226,9 +234,9 @@ class Bot:
         self._open_map()
         self._travel_via_map(Template.MINE_MAP)
 
-    def _travel_to_nightclub(self) -> None:
+    def _travel_to_the_town(self) -> None:
         self._open_map()
-        self._travel_via_map(Template.NIGHTCLUB_MAP)
+        self._travel_via_map(Template.THE_TOWN_MAP)
 
     def _travel_to_welcome_room(self) -> None:
         self._open_map()
@@ -252,6 +260,72 @@ class Bot:
         coordinates = self.find_template_retry(Template.TELESCOPE_BEACON)
         if coordinates is None:
             raise ValueError("Could not confirm beacon room loaded.")
+
+    def _travel_to_skii_lodge(self) -> None:
+        self._travel_to_skii_village()
+        self.click_template(Template.SKII_VILLAGE_TREE)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        self.click_template(Template.SKII_LODGE_FRONT_DOOR)
+        self.page.wait_for_timeout(3000)
+        coordinates = self.find_template_retry(Template.MULLET_HEAD_SKII_LODGE)
+        if coordinates is None:
+            raise ValueError("Could not confirm skii lodge room loaded.")
+
+    def _travel_to_skii_lodge_attic(self) -> None:
+        self._travel_to_skii_lodge()
+        self.click_template(Template.SKII_LODGE_STAIRS)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(5000)
+        coordinates = self.find_template_retry(Template.SKII_LODGE_ATTIC_HORSE_HEAD)
+        if coordinates is None:
+            raise ValueError("Could not confirm skii lodge attic room loaded.")
+
+    def _travel_to_sports_shop(self) -> None:
+        self._travel_to_skii_village()
+        self.click_template(Template.SKII_VILLAGE_TREE)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        self.click_template(Template.WINTER_SPORT_DOOR_SKII_VILLAGE)
+        self.page.wait_for_timeout(5000)
+        coordinates = self.find_template_retry(Template.SPORT_SHOP_SURF_IMAGE)
+        if coordinates is None:
+            raise ValueError("Could not confirm sport shop room loaded.")
+
+    def _travel_to_spy_headquarters(self) -> None:
+        self.click_template(Template.SPY_PHONE)
+        self.click_template(Template.SPY_PHONE_VISIT_HQ_BUTTON)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        coordinates = self.find_template_retry(Template.SPY_HEADQUARTERS_KEYBOARD)
+        if coordinates is None:
+            raise ValueError("Could not confirm spy headquarters room loaded.")
+
+    def _travel_to_nightclub(self) -> None:
+        self.travel(Destination.THE_TOWN)
+        self.click_template(Template.NIGHT_CLUB_FRONT_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        coordinates = self.find_template_retry(Template.NIGHT_CLUB_SPEAKER)
+        if coordinates is None:
+            raise ValueError("Could not confirm nightclub room loaded.")
+
+    def _travel_to_lounge(self) -> None:
+        self.travel(Destination.NIGHTCLUB)
+        self.click_template(Template.NIGHT_CLUB_BOTTOM_LEFT_SEGMENT)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        self.click_template(Template.NIGHT_CLUB_STAIRS_TO_LOUNGE)
+        self.page.wait_for_timeout(5000)
+        coordinates = self.find_template_retry(Template.LOUNGE_OVERHEAD_TV_CABLES)
+        if coordinates is None:
+            raise ValueError("Could not confirm lounge room loaded.")
 
     def login(self, username: str, password: str, server: str) -> None:
         if self.page is None:
