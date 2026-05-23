@@ -6,7 +6,6 @@ import os
 
 def travel(bot: Bot, destination: Destination):
     bot.travel(destination)
-    bot.send_message(f"{destination}")
 
 
 def main():
@@ -16,6 +15,11 @@ def main():
     server = os.getenv("CPJ_SERVER", "Blizzard")
     with Bot(url=url) as bot:
         bot.login(user, password, server)
+        travel(bot, Destination.SPY_HEADQUARTERS)
+        travel(bot, Destination.NIGHTCLUB)
+        travel(bot, Destination.SKII_LODGE_ATTIC)
+        travel(bot, Destination.LOUNGE)
+        travel(bot, Destination.SKII_LODGE)
         travel(bot, Destination.DOJO_COURTYARD)
         travel(bot, Destination.LIGHTHOUSE)
         travel(bot, Destination.FOREST)
@@ -30,7 +34,7 @@ def main():
         travel(bot, Destination.THE_COVE)
         travel(bot, Destination.THE_DOCK)
         travel(bot, Destination.THE_PLAZA)
-        travel(bot, Destination.NIGHTCLUB)
+        travel(bot, Destination.THE_TOWN)
         travel(bot, Destination.WELCOME_ROOM)
 
 
