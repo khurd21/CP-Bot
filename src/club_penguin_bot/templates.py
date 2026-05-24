@@ -85,3 +85,15 @@ class Template(StrEnum):
     THE_STAGE_CEILING_ART = "the-stage-ceiling-art.png"
 
     PIZZA_PARLOR_FISH_DISH_MENU = "pizza-parlor-fish-dish-menu.png"
+
+    ## DOJO
+    DOJO_CARD_JITSU_SIGN = "dojo-card-jitsu-sign.png"
+    DOJO_COURTYARD_ABOVE_DOOR = "dojo-courtyard-above-door.png"
+
+    ## Mine
+    MINE_SHACK_TO_MINE = "mine-shack-to-mine.png"
+    MINE_SHACK_TO_RECYCLING_PLANT = "mine-shack-to-recycling-plant.png"
+    MINE_SIGN = "mine-sign.png"
+    RECYCLING_PLANT_FIRE_ALARM = "recycling-plant-fire-alarm.png"
+    MINE_TO_CAVE_MINE = "mine-to-cave-mine.png"
+    CAVE_MINE_HARD_HAT = "cave-mine-hard-hat.png"

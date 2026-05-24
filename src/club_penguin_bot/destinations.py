@@ -3,6 +3,7 @@ from enum import StrEnum
 
 class Destination(StrEnum):
     DOJO_COURTYARD = "dojo_courtyard"
+    DOJO = "dojo"
     FOREST = "forest"
     ICEBERG = "iceberg"
     SKII_HILL = "skii_hill"
@@ -13,7 +14,9 @@ class Destination(StrEnum):
     THE_COVE = "the_cove"
     THE_DOCK = "the_dock"
     THE_PLAZA = "the_plaza"
+    MINE_SHACK = "mine_shack"
     MINE = "mine"
+    CAVE_MINE = "cave_mine"
     THE_TOWN = "the_town"
     WELCOME_ROOM = "welcome_room"
     LIGHTHOUSE = "lighthouse"
@@ -34,3 +37,4 @@ class Destination(StrEnum):
     PET_SHOP_PUFFLE_PARK = "pet_shop_puffle_park"
     THE_STAGE = "the_stage"
     PIZZA_PARLOR = "pizza_parlor"
+    RECYCLING_PLANT = "recycling_plant"
