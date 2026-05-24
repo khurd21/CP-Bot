@@ -19,9 +19,7 @@ def main():
     with Bot(url) as bot:
         bot.login(username, password, server)
         while True:
-            input(
-                "Browser launched. Navigate where needed, then press Enter to capture screenshot... "
-            )
+            input("Browser launched. Navigate where needed, then press Enter to capture screenshot... ")
             image = bot.screenshot()
             if image is None:
                 raise RuntimeError("Failed to capture screenshot.")
