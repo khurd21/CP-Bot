@@ -132,7 +132,7 @@ class Bot:
             Destination.THE_COVE: self._travel_to_the_cove,
             Destination.THE_DOCK: self._travel_to_the_dock,
             Destination.THE_PLAZA: self._travel_to_the_plaza,
-            Destination.MINE: self._travel_to_mine,
+            Destination.MINE_SHACK: self._travel_to_mine_shack,
             Destination.THE_TOWN: self._travel_to_the_town,
             Destination.WELCOME_ROOM: self._travel_to_welcome_room,
             Destination.LIGHTHOUSE: self._travel_to_lighthouse,
@@ -153,6 +153,10 @@ class Bot:
             Destination.THE_STAGE: self._travel_to_the_stage,
             Destination.PIZZA_PARLOR: self._travel_to_pizza_parlor,
             Destination.SPORTS_SHOP: self._travel_to_sports_shop,
+            Destination.DOJO: self._travel_to_dojo,
+            Destination.CAVE_MINE: self._travel_to_cave_mine,
+            Destination.MINE: self._travel_to_mine,
+            Destination.RECYCLING_PLANT: self._travel_to_recycling_plant,
         }
 
         handler = route_handlers.get(destination)
@@ -243,7 +247,7 @@ class Bot:
         self._open_map()
         self._travel_via_map(Template.THE_PLAZA_MAP)
 
-    def _travel_to_mine(self) -> None:
+    def _travel_to_mine_shack(self) -> None:
         self._open_map()
         self._travel_via_map(Template.MINE_MAP)
 
@@ -441,6 +445,46 @@ class Bot:
         coordinates = self.find_template_retry(Template.PIZZA_PARLOR_FISH_DISH_MENU)
         if coordinates is None:
             raise ValueError("Could not confirm pizza parlor room loaded.")
+
+    def _travel_to_dojo(self) -> None:
+        self.travel(Destination.DOJO_COURTYARD)
+        self.click_template(Template.DOJO_COURTYARD_ABOVE_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.DOJO_CARD_JITSU_SIGN)
+        if coordinates is None:
+            raise ValueError("Could not confirm dojo room loaded.")
+
+    def _travel_to_mine(self) -> None:
+        self.travel(Destination.MINE_SHACK)
+        self.click_template(Template.MINE_SHACK_TO_MINE)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.MINE_SIGN)
+        if coordinates is None:
+            raise ValueError("Could not confirm mine room loaded.")
+
+    def _travel_to_recycling_plant(self) -> None:
+        self.travel(Destination.MINE_SHACK)
+        self.click_template(Template.MINE_SHACK_TO_RECYCLING_PLANT)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.RECYCLING_PLANT_FIRE_ALARM)
+        if coordinates is None:
+            raise ValueError("Could not confirm recycling plant room loaded.")
+
+    def _travel_to_cave_mine(self) -> None:
+        self.travel(Destination.MINE)
+        self.click_template(Template.MINE_TO_CAVE_MINE)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.CAVE_MINE_HARD_HAT)
+        if coordinates is None:
+            raise ValueError("Could not confirm cave mine room loaded.")
 
     def login(self, username: str, password: str, server: str) -> None:
         if self.page is None:
