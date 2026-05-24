@@ -51,9 +51,37 @@ class Template(StrEnum):
 
     ## Town
     COFFEE_SHOP_DOOR = "coffee-shop-door.png"
-    GIFT_SHOP_FRONT_DOOR = "gitft-shop-front-door.png"
+    COFFEE_SHOP_EXIT_SIGN = "coffee-shop-exit-sign.png"
+    COFFEE_SHOP_BOTTOM_LEFT_SEGMENT = "coffee-shop-bottom-left-segment.png"
+    COFFEE_SHOP_STAIRS_TO_BOOK_ROOM = "coffee-shop-stairs-to-book-room.png"
+    BOOK_ROOM_TOP_SHELF = "book-room-top-shelf.png"
+
+    GIFT_SHOP_FRONT_DOOR = "gift-shop-front-door.png"
+    GIFT_SHOP_POSTER = "gift-shop-poster.png"
+    GIFT_SHOP_TO_OFFICE_DOOR = "gift-shop-to-office-door.png"
+    GIFT_SHOP_OFFICE_ROOF_SIGN = "gift-shop-office-roof-sign.png"
+
     NIGHT_CLUB_FRONT_DOOR = "night-club-front-door.png"
     NIGHT_CLUB_SPEAKER = "night-club-speaker.png"
     NIGHT_CLUB_BOTTOM_LEFT_SEGMENT = "night-club-bottom-left-segment.png"
     NIGHT_CLUB_STAIRS_TO_LOUNGE = "night-club-stairs-to-lounge.png"
     LOUNGE_OVERHEAD_TV_CABLES = "lounge-overhead-tv-cables.png"
+
+    ## Welcome Room
+    TOUR_HQ_FRONT_DOOR = "tour-hq-front-door.png"
+    TOUR_HQ_CALENDAR = "tour-hq-calendar.png"
+    TOUR_HQ_STAIRS_TO_ROOF = "tour-hq-stairs-to-roof.png"
+    TOUR_HQ_LOOKOUT_WALL_ART = "tour-hq-lookout-wall-art.png"
+
+    ## The Plaza
+    PET_SHOP_FRONT_DOOR = "pet-shop-front-door.png"
+    THE_STAGE_FRONT_DOOR = "the-stage-front-door.png"
+    PIZZA_PARLOR_FRONT_DOOR = "pizza-parlor-front-door.png"
+
+    PET_SHOP_EXIT_SIGN = "pet-shop-exit-sign.png"
+    PET_SHOP_DOOR_TO_PUFFLE_PARK = "pet-shop-door-to-puffle-park.png"
+    PUFFLE_PARK_BUSH_O = "puffle-park-bush-o.png"
+
+    THE_STAGE_CEILING_ART = "the-stage-ceiling-art.png"
+
+    PIZZA_PARLOR_FISH_DISH_MENU = "pizza-parlor-fish-dish-menu.png"

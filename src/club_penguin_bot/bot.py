@@ -1,3 +1,5 @@
+from ssl import ALERT_DESCRIPTION_NO_RENEGOTIATION
+from multiprocessing import Value
 import pytesseract
 from tenacity import (
     retry,
@@ -140,6 +142,17 @@ class Bot:
             Destination.NIGHTCLUB: self._travel_to_nightclub,
             Destination.LOUNGE: self._travel_to_lounge,
             Destination.SPY_HEADQUARTERS: self._travel_to_spy_headquarters,
+            Destination.GIFT_SHOP: self._travel_to_gift_shop,
+            Destination.GIFT_SHOP_OFFICE: self._travel_to_gift_shop_office,
+            Destination.COFFEE_SHOP: self._travel_to_coffee_shop,
+            Destination.BOOK_ROOM: self._travel_to_book_room,
+            Destination.TOUR_HQ: self._travel_to_tour_hq,
+            Destination.TOUR_HQ_LOOKOUT: self._travel_to_tour_hq_lookout,
+            Destination.PET_SHOP: self._travel_to_pet_shop,
+            Destination.PET_SHOP_PUFFLE_PARK: self._travel_to_puffle_park,
+            Destination.THE_STAGE: self._travel_to_the_stage,
+            Destination.PIZZA_PARLOR: self._travel_to_pizza_parlor,
+            Destination.SPORTS_SHOP: self._travel_to_sports_shop,
         }
 
         handler = route_handlers.get(destination)
@@ -326,6 +339,108 @@ class Bot:
         coordinates = self.find_template_retry(Template.LOUNGE_OVERHEAD_TV_CABLES)
         if coordinates is None:
             raise ValueError("Could not confirm lounge room loaded.")
+
+    def _travel_to_coffee_shop(self) -> None:
+        self.travel(Destination.THE_TOWN)
+        self.click_template(Template.COFFEE_SHOP_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        coordinates = self.find_template_retry(Template.COFFEE_SHOP_EXIT_SIGN)
+        if coordinates is None:
+            raise ValueError("Could not confirm coffee shop room loaded.")
+
+    def _travel_to_book_room(self) -> None:
+        self.travel(Destination.COFFEE_SHOP)
+        self.click_template(Template.COFFEE_SHOP_BOTTOM_LEFT_SEGMENT)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        self.click_template(Template.COFFEE_SHOP_STAIRS_TO_BOOK_ROOM)
+        self.page.wait_for_timeout(5000)
+        coordinates = self.find_template_retry(Template.BOOK_ROOM_TOP_SHELF)
+        if coordinates is None:
+            raise ValueError("Could not confirm book room loaded.")
+
+    def _travel_to_gift_shop(self) -> None:
+        self.travel(Destination.THE_TOWN)
+        self.click_template(Template.GIFT_SHOP_FRONT_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3000)
+        coordinates = self.find_template_retry(Template.GIFT_SHOP_POSTER)
+        if coordinates is None:
+            raise ValueError("Could not confirm gift shop room loaded.")
+
+    def _travel_to_gift_shop_office(self) -> None:
+        self.travel(Destination.GIFT_SHOP)
+        self.click_template(Template.GIFT_SHOP_TO_OFFICE_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(5000)
+        coordinates = self.find_template_retry(Template.GIFT_SHOP_OFFICE_ROOF_SIGN)
+        if coordinates is None:
+            raise ValueError("Could not confirm gift shop office room loaded.")
+
+    def _travel_to_tour_hq(self) -> None:
+        self.travel(Destination.WELCOME_ROOM)
+        self.click_template(Template.TOUR_HQ_FRONT_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.TOUR_HQ_CALENDAR)
+        if coordinates is None:
+            raise ValueError("Could not confirm tour hq room loaded.")
+
+    def _travel_to_tour_hq_lookout(self) -> None:
+        self.travel(Destination.TOUR_HQ)
+        self.click_template(Template.TOUR_HQ_STAIRS_TO_ROOF)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.TOUR_HQ_LOOKOUT_WALL_ART)
+        if coordinates is None:
+            raise ValueError("Could not confirm tour hq lookout room loaded.")
+
+    def _travel_to_pet_shop(self) -> None:
+        self.travel(Destination.THE_PLAZA)
+        self.click_template(Template.PET_SHOP_FRONT_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.PET_SHOP_EXIT_SIGN)
+        if coordinates is None:
+            raise ValueError("Could not confirm pet shop room loaded.")
+
+    def _travel_to_puffle_park(self) -> None:
+        self.travel(Destination.PET_SHOP)
+        self.click_template(Template.PET_SHOP_DOOR_TO_PUFFLE_PARK)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.PUFFLE_PARK_BUSH_O)
+        if coordinates is None:
+            raise ValueError("Could not confirm pet shop room loaded.")
+
+    def _travel_to_the_stage(self) -> None:
+        self.travel(Destination.THE_PLAZA)
+        self.click_template(Template.THE_STAGE_FRONT_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.THE_STAGE_CEILING_ART)
+        if coordinates is None:
+            raise ValueError("Could not confirm the stage room loaded.")
+
+    def _travel_to_pizza_parlor(self) -> None:
+        self.travel(Destination.THE_PLAZA)
+        self.click_template(Template.PIZZA_PARLOR_FRONT_DOOR)
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+        self.page.wait_for_timeout(3500)
+        coordinates = self.find_template_retry(Template.PIZZA_PARLOR_FISH_DISH_MENU)
+        if coordinates is None:
+            raise ValueError("Could not confirm pizza parlor room loaded.")
 
     def login(self, username: str, password: str, server: str) -> None:
         if self.page is None:

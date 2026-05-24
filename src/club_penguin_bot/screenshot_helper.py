@@ -9,10 +9,15 @@ from club_penguin_bot.bot import Bot
 
 def main():
     url = os.getenv("CPJ_URL", "https://play.cpjourney.net/")
+    username = os.environ["CPJ_USERNAME"]
+    password = os.environ["CPJ_PASSWORD"]
+    server = os.getenv("CPJ_SERVER", "Blizzard")
+
     templates_dir = Path(__file__).parent / "templates"
     templates_dir.mkdir(parents=True, exist_ok=True)
 
     with Bot(url) as bot:
+        bot.login(username, password, server)
         while True:
             input(
                 "Browser launched. Navigate where needed, then press Enter to capture screenshot... "
