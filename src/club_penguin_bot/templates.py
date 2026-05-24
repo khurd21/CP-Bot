@@ -97,3 +97,6 @@ class Template(StrEnum):
     RECYCLING_PLANT_FIRE_ALARM = "recycling-plant-fire-alarm.png"
     MINE_TO_CAVE_MINE = "mine-to-cave-mine.png"
     CAVE_MINE_HARD_HAT = "cave-mine-hard-hat.png"
+
+    ## Snow Forts
+    SNOW_FORTS_CLOCK_TARGET = "snow-forts-clock-target.png"
