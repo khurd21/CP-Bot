@@ -6,7 +6,8 @@ disable=
     missing-class-docstring,
     missing-function-docstring,
     too-few-public-methods,
-    duplicate-code
+    duplicate-code,
+    assignment-from-no-return
 
 [FORMAT]
 max-line-length=300

@@ -24,12 +24,14 @@ class ThrowSnowballAtClockAction(BaseAction):
             raise ValueError("Page cannot be None.")
 
         self.bot.travel(Destination.SNOW_FORTS)
+        coordinates = self.bot.find_template(Template.SNOW_FORTS_CLOCK_TARGET)
+        if coordinates is None:
+            raise ValueError("Could not locate target in snow forts room.")
 
         for _ in range(self.settings.num_throws):
             self.bot.page.wait_for_timeout(self.settings.pre_throw_delay_ms)
             self.bot.page.keyboard.press("T", delay=40)
-            if not self.bot.click_template(Template.SNOW_FORTS_CLOCK_TARGET, delay=0):
-                raise ValueError("Could not locate target in Snow Forts.")
+            self.bot.page.mouse.click(*coordinates)
             self.bot.page.wait_for_timeout(self.settings.post_throw_delay_ms)
 
 
