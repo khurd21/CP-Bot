@@ -1,4 +1,3 @@
-import time
 import os
 from dataclasses import dataclass, field
 from enum import Enum
@@ -30,7 +29,7 @@ PENGUIN_TEMPLATES: dict[Penguin, Template] = {
 
 @dataclass
 class PizzaOvenGameSettings:
-    max_orders: int = 20
+    max_orders: int = 40
     slot_duration_s: float = 1.0
 
 
@@ -76,29 +75,19 @@ class PizzaOvenGameAction(BaseAction):
 
         key_order: list[Penguin] = []
         for i in range(self.settings.max_orders):
-            captured_order_list: list[Penguin] = []
+            if i == 0:
+                # Round 1: wait for replay button, click it, then scan immediately for the first penguin.
+                self.bot.page.wait_for_timeout(3000)
+                replay_button_coordinates = self.bot.find_template_retry(Template.PIZZA_OVEN_REPLAY_ORDER_BUTTON)
+                if replay_button_coordinates is None:
+                    raise ValueError("Could not find replay button.")
 
-            # Wait until replay button appears before initiating next round
-            self.bot.page.wait_for_timeout(1000 * (i + 1))
-            replay_button_coordinates = self.bot.find_template_retry(Template.PIZZA_OVEN_REPLAY_ORDER_BUTTON)
-            if replay_button_coordinates is None:
-                raise ValueError("Could not find replay button.")
+                self.bot.page.mouse.click(*collect_pizza_coordinates, delay=40)
+                self.bot.page.wait_for_timeout(400)
+                self.bot.page.mouse.click(*replay_button_coordinates, delay=40)
+                self.bot.page.mouse.move(*collect_pizza_coordinates)
+                self.bot.page.wait_for_timeout(400)
 
-            self.bot.page.mouse.click(*collect_pizza_coordinates, delay=40)
-            self.bot.page.wait_for_timeout(400)
-
-            # It is important that time begins immediately after clicking the replay button
-            self.bot.page.mouse.click(*replay_button_coordinates, delay=40)
-            sequence_start = time.time()
-            self.bot.page.mouse.move(*collect_pizza_coordinates)
-
-            ## Mass screenshot, searching for penguin raising hand
-            # For each of the (i + 1) slots in this order, sample at the midpoint
-            # of each slot's expected time window to detect which penguin is raising hand.
-            for n in range(i + 1):
-                target = sequence_start + (n + 0.4) * self.settings.slot_duration_s
-                wait = target - time.time()
-                time.sleep(max(wait, 0))
                 screenshot = self.bot.screenshot()
                 detected_penguin: Penguin | None = None
                 for penguin, template in PENGUIN_TEMPLATES.items():
@@ -106,19 +95,23 @@ class PizzaOvenGameAction(BaseAction):
                         detected_penguin = penguin
                         break
                 if detected_penguin is None:
-                    raise ValueError(f"Could not detect penguin for slot {n + 1} in round {i + 1}.")
-                captured_order_list.append(detected_penguin)
-
-            expected_count = i + 1
-            if len(captured_order_list) != expected_count:
-                raise ValueError(f"Expected {expected_count} penguins in round {i + 1}, got {len(captured_order_list)}.")
-
-            if i == 0:
-                key_order = captured_order_list.copy()
-            elif captured_order_list[:-1] != key_order:
-                raise ValueError(f"Order prefix mismatch in round {i + 1}. Key: {[penguin.name for penguin in key_order]}, Current: {[penguin.name for penguin in captured_order_list]}")
+                    raise ValueError("Could not detect first penguin in round 1.")
+                key_order.append(detected_penguin)
             else:
-                key_order.append(captured_order_list[-1])
+                # Rounds 2+: wait i+1 seconds so the new (last) penguin is raising their hand, detect it.
+                self.bot.page.wait_for_timeout(1000 * (i + 1))
+                if i >= 20:
+                    self.bot.page.wait_for_timeout(400)
+
+                screenshot = self.bot.screenshot()
+                detected_penguin = None
+                for penguin, template in PENGUIN_TEMPLATES.items():
+                    if self.bot.find_template_in(screenshot, template) is not None:
+                        detected_penguin = penguin
+                        break
+                if detected_penguin is None:
+                    raise ValueError(f"Could not detect penguin for round {i + 1}.")
+                key_order.append(detected_penguin)
 
             self.bot.page.mouse.click(*collect_pizza_coordinates, delay=40)
             for penguin in key_order:
@@ -126,7 +119,7 @@ class PizzaOvenGameAction(BaseAction):
                 if penguin_coordinates is None:
                     raise ValueError(f"Missing coordinates for {penguin.name} penguin.")
                 self.bot.page.mouse.click(*penguin_coordinates, delay=40)
-                self.bot.page.wait_for_timeout(500)
+                self.bot.page.wait_for_timeout(200)
 
         self.bot.click_template(Template.PIZZA_OVEN_EXIT_GAME_BUTTON)
         self.bot.page.wait_for_timeout(1000)
