@@ -305,6 +305,7 @@ class Travel:
     def _travel_to_pizza_parlor(self) -> None:
         self.to(Destination.THE_PLAZA)
         self._bot.click_template(Template.PIZZA_PARLOR_FRONT_DOOR)
+        self._bot.click_template(Template.PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY)
         self._wait(3500)
         coordinates = self._bot.find_template_retry(Template.PIZZA_PARLOR_FISH_DISH_MENU)
         if coordinates is None:

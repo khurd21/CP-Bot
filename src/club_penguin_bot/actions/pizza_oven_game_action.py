@@ -38,7 +38,8 @@ class PizzaOvenGameAction(BaseAction):
     bot: BotProtocol
     settings: PizzaOvenGameSettings = field(default_factory=PizzaOvenGameSettings)
 
-    def run(self) -> None:
+    def _setup_game(self) -> tuple[tuple[int, int], dict[Penguin, tuple[int, int] | None]]:
+        """Initialize game and return collect pizza coordinates and penguin coordinate map."""
         if self.bot.page is None:
             raise ValueError("Page cannot be None.")
 
@@ -58,7 +59,7 @@ class PizzaOvenGameAction(BaseAction):
         if collect_pizza_coordinates is None:
             raise ValueError("Could not find pizza oven.")
 
-        self.bot.page.mouse.click(*collect_pizza_coordinates)
+        self.bot.page.mouse.move(*collect_pizza_coordinates)
         screenshot = self.bot.screenshot()
         penguin_coordinates_map: dict[Penguin, tuple[int, int] | None] = {
             Penguin.BLUE: self.bot.find_template_in(screenshot, Template.PIZZA_OVEN_BLUE_PENGUIN),
@@ -73,53 +74,69 @@ class PizzaOvenGameAction(BaseAction):
             if penguin_coordinates is None:
                 raise ValueError(f"Could not find coordinates for {penguin.name} penguin.")
 
-        key_order: list[Penguin] = []
-        for i in range(self.settings.max_orders):
-            if i == 0:
-                # Round 1: wait for replay button, click it, then scan immediately for the first penguin.
-                self.bot.page.wait_for_timeout(3000)
-                replay_button_coordinates = self.bot.find_template_retry(Template.PIZZA_OVEN_REPLAY_ORDER_BUTTON)
-                if replay_button_coordinates is None:
-                    raise ValueError("Could not find replay button.")
+        return collect_pizza_coordinates, penguin_coordinates_map
 
-                self.bot.page.mouse.click(*collect_pizza_coordinates, delay=40)
-                self.bot.page.wait_for_timeout(400)
-                self.bot.page.mouse.click(*replay_button_coordinates, delay=40)
-                self.bot.page.mouse.move(*collect_pizza_coordinates)
-                self.bot.page.wait_for_timeout(400)
+    def _detect_penguin_in_round(self, round_num: int) -> Penguin:
+        """Detect which penguin is asking for pizza in the given round."""
+        if self.bot.page is None:
+            raise ValueError("Page cannot be None.")
 
-                screenshot = self.bot.screenshot()
-                detected_penguin: Penguin | None = None
-                for penguin, template in PENGUIN_TEMPLATES.items():
-                    if self.bot.find_template_in(screenshot, template) is not None:
-                        detected_penguin = penguin
-                        break
-                if detected_penguin is None:
-                    raise ValueError("Could not detect first penguin in round 1.")
-                key_order.append(detected_penguin)
-            else:
-                # Rounds 2+: wait i+1 seconds so the new (last) penguin is raising their hand, detect it.
-                self.bot.page.wait_for_timeout(1000 * (i + 1))
-                if i >= 20:
-                    self.bot.page.wait_for_timeout(400)
+        if round_num == 0:
+            # Round 1: wait for replay button, click it, then scan immediately for the first penguin.
+            self.bot.page.wait_for_timeout(3000)
+            replay_button_coordinates = self.bot.find_template_retry(Template.PIZZA_OVEN_REPLAY_ORDER_BUTTON)
+            if replay_button_coordinates is None:
+                raise ValueError("Could not find replay button.")
 
-                screenshot = self.bot.screenshot()
-                detected_penguin = None
-                for penguin, template in PENGUIN_TEMPLATES.items():
-                    if self.bot.find_template_in(screenshot, template) is not None:
-                        detected_penguin = penguin
-                        break
-                if detected_penguin is None:
-                    raise ValueError(f"Could not detect penguin for round {i + 1}.")
-                key_order.append(detected_penguin)
+            collect_pizza_coordinates = self.bot.find_template_retry(Template.PIZZA_OVEN_GAME_COLLECT_PIZZA)
+            if collect_pizza_coordinates is None:
+                raise ValueError("Could not find pizza oven.")
 
             self.bot.page.mouse.click(*collect_pizza_coordinates, delay=40)
-            for penguin in key_order:
-                penguin_coordinates = penguin_coordinates_map[penguin]
-                if penguin_coordinates is None:
-                    raise ValueError(f"Missing coordinates for {penguin.name} penguin.")
-                self.bot.page.mouse.click(*penguin_coordinates, delay=40)
-                self.bot.page.wait_for_timeout(200)
+            self.bot.page.wait_for_timeout(400)
+            self.bot.page.mouse.click(*replay_button_coordinates, delay=40)
+            self.bot.page.mouse.move(*collect_pizza_coordinates)
+            self.bot.page.wait_for_timeout(400)
+        else:
+            # Rounds 2+: wait i+1 seconds so the new (last) penguin is raising their hand, detect it.
+            self.bot.page.wait_for_timeout(1000 * (round_num + 1))
+            if round_num >= 20:
+                self.bot.page.wait_for_timeout(400)
+
+        screenshot = self.bot.screenshot()
+        detected_penguin: Penguin | None = None
+        for penguin, template in PENGUIN_TEMPLATES.items():
+            if self.bot.find_template_in(screenshot, template) is not None:
+                detected_penguin = penguin
+                break
+        if detected_penguin is None:
+            raise ValueError(f"Could not detect penguin for round {round_num + 1}.")
+        return detected_penguin
+
+    def _deliver_pizzas(self, key_order: list[Penguin], collect_pizza_coordinates: tuple[int, int], penguin_coordinates_map: dict[Penguin, tuple[int, int] | None]) -> None:
+        """Deliver pizzas to penguins in the order they were detected."""
+        if self.bot.page is None:
+            raise ValueError("Page cannot be None.")
+
+        self.bot.page.mouse.click(*collect_pizza_coordinates, delay=40)
+        for penguin in key_order:
+            penguin_coordinates = penguin_coordinates_map[penguin]
+            if penguin_coordinates is None:
+                raise ValueError(f"Missing coordinates for {penguin.name} penguin.")
+            self.bot.page.mouse.click(*penguin_coordinates, delay=40)
+            self.bot.page.wait_for_timeout(200)
+
+    def run(self) -> None:
+        if self.bot.page is None:
+            raise ValueError("Page cannot be None.")
+
+        collect_pizza_coordinates, penguin_coordinates_map = self._setup_game()
+
+        key_order: list[Penguin] = []
+        for i in range(self.settings.max_orders):
+            detected_penguin = self._detect_penguin_in_round(i)
+            key_order.append(detected_penguin)
+            self._deliver_pizzas(key_order, collect_pizza_coordinates, penguin_coordinates_map)
 
         self.bot.click_template(Template.PIZZA_OVEN_EXIT_GAME_BUTTON)
         self.bot.page.wait_for_timeout(1000)

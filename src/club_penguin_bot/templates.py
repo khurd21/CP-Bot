@@ -81,6 +81,7 @@ class Template(StrEnum):
     THE_STAGE_FRONT_DOOR = "the-stage-front-door.png"
 
     PIZZA_PARLOR_FRONT_DOOR = "pizza-parlor-front-door.png"
+    PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY = "pizza-parlor-front-door-puffle-party.png"
     PIZZA_PARLOR_FISH_DISH_MENU = "pizza-parlor-fish-dish-menu.png"
     PIZZA_PARLOR_PIZZA_OVEN = "pizza-parlor-pizza-oven.png"
     PIZZA_OVEN_START_BUTTON = "pizza-oven-start-button.png"
