@@ -60,9 +60,10 @@ class Vision:
         return array
 
     def find_template(self, template_name: Template, threshold: float = 0.85) -> tuple[int, int] | None:
-        template = self._read_template(template_name)
+        return self.find_template_in(self.screenshot(), template_name, threshold=threshold)
 
-        screen = self.screenshot()
+    def find_template_in(self, screen: np.ndarray, template_name: Template, threshold: float = 0.85) -> tuple[int, int] | None:
+        template = self._read_template(template_name)
         result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
         _, max_val, _, max_loc = cv2.minMaxLoc(result)
         if max_val < threshold:

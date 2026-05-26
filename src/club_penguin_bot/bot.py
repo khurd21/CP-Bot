@@ -1,5 +1,6 @@
 from typing import Optional
 
+from tenacity import retry_if_result, stop_after_attempt, wait_fixed, retry
 import numpy as np
 import validators
 from playwright.sync_api import Browser, Page, Playwright, sync_playwright
@@ -38,6 +39,9 @@ class Bot:
     def find_template(self, template_name: Template, threshold: float = 0.85) -> Optional[tuple[int, int]]:
         return self._require_vision().find_template(template_name, threshold=threshold)
 
+    def find_template_in(self, screen: np.ndarray, template_name: Template, threshold: float = 0.85) -> Optional[tuple[int, int]]:
+        return self._require_vision().find_template_in(screen, template_name, threshold=threshold)
+
     def find_template_retry(self, template_name: Template, threshold: float = 0.85) -> Optional[tuple[int, int]]:
         return self._require_vision().find_template_retry(template_name, threshold=threshold)
 
@@ -52,6 +56,15 @@ class Bot:
         self.page.mouse.click(*coordinates)
         self.page.wait_for_timeout(delay)
         return True
+
+    @retry(
+        retry=retry_if_result(lambda result: not result),
+        stop=stop_after_attempt(3),
+        wait=wait_fixed(2),
+        retry_error_callback=lambda state: False,
+    )
+    def click_template_retry(self, template_name: Template, delay: int = 500):
+        return self.click_template(template_name, delay)
 
     def send_message(self, message: str) -> None:
         if self.page is None:
