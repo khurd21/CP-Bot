@@ -9,6 +9,7 @@ from club_penguin_bot.destinations import Destination
 from club_penguin_bot.templates import Template
 from club_penguin_bot.travel import Travel
 from club_penguin_bot.vision import Vision
+from club_penguin_bot.emote import Emote
 
 
 class Bot:
@@ -73,6 +74,18 @@ class Bot:
         self.click_template(Template.MESSAGE_BOX)
         self.page.keyboard.type(message, delay=40)
         self.click_template(Template.SEND_MESSAGE_BUTTON)
+
+    def emote(self, emote: Emote, delay: int = 500) -> None:
+        if self.page is None:
+            raise ValueError("Page cannot be None.")
+
+        for key in emote.value:
+            self.page.keyboard.down(key)
+
+        for key in emote.value:
+            self.page.keyboard.up(key)
+
+        self.page.wait_for_timeout(delay)
 
     def travel(self, destination: Destination) -> None:
         self.navigator.to(destination)
