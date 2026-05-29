@@ -5,6 +5,7 @@ import numpy as np
 
 from club_penguin_bot.destinations import Destination
 from club_penguin_bot.templates import Template
+from club_penguin_bot.emote import Emote
 
 
 class BotProtocol(Protocol):
@@ -21,3 +22,5 @@ class BotProtocol(Protocol):
     def find_template_retry(self, template_name: Template, threshold: float = 0.85) -> tuple[int, int] | None: ...
 
     def travel(self, destination: Destination) -> None: ...
+
+    def emote(self, emote: Emote, delay: int = 500) -> None: ...
