@@ -3,7 +3,16 @@ from enum import StrEnum
 from club_penguin_bot.templates.login import LoginTemplate
 from club_penguin_bot.templates.ui import UITemplate
 from club_penguin_bot.templates.map import MapTemplate
-from club_penguin_bot.templates.navigation import NavigationTemplate
+from club_penguin_bot.templates.beach import BeachTemplate
+from club_penguin_bot.templates.skii_lodge import SkiiLodgeTemplate
+from club_penguin_bot.templates.spy_headquarters import SpyHeadquartersTemplate
+from club_penguin_bot.templates.coffee_shop import CoffeeShopTemplate
+from club_penguin_bot.templates.gift_shop import GiftShopTemplate
+from club_penguin_bot.templates.night_club import NightClubTemplate
+from club_penguin_bot.templates.tour_hq import TourHQTemplate
+from club_penguin_bot.templates.pet_shop import PetShopTemplate
+from club_penguin_bot.templates.stage import StageTemplate
+from club_penguin_bot.templates.pizza_parlor import PizzaParlorTemplate
 from club_penguin_bot.templates.pizza_oven import PizzaOvenTemplate
 from club_penguin_bot.templates.dojo import DojoTemplate
 from club_penguin_bot.templates.mine import MineTemplate
@@ -40,61 +49,70 @@ class Template(StrEnum):
     THE_TOWN_MAP = MapTemplate.THE_TOWN_MAP
     WELCOME_ROOM_MAP = MapTemplate.WELCOME_ROOM_MAP
 
-    # Navigation templates
-    ROCK_THE_BEACH = NavigationTemplate.ROCK_THE_BEACH
-    LIGHT_ABOVE_DOOR_THE_BEACH = NavigationTemplate.LIGHT_ABOVE_DOOR_THE_BEACH
-    SEVEN_LIGHTHOUSE = NavigationTemplate.SEVEN_LIGHTHOUSE
-    TO_TOP_SIGN_LIGHTHOUSE = NavigationTemplate.TO_TOP_SIGN_LIGHTHOUSE
-    TELESCOPE_BEACON = NavigationTemplate.TELESCOPE_BEACON
+    # Beach templates
+    ROCK_THE_BEACH = BeachTemplate.ROCK_THE_BEACH
+    LIGHT_ABOVE_DOOR_THE_BEACH = BeachTemplate.LIGHT_ABOVE_DOOR_THE_BEACH
+    SEVEN_LIGHTHOUSE = BeachTemplate.SEVEN_LIGHTHOUSE
+    TO_TOP_SIGN_LIGHTHOUSE = BeachTemplate.TO_TOP_SIGN_LIGHTHOUSE
+    TELESCOPE_BEACON = BeachTemplate.TELESCOPE_BEACON
 
-    SKII_LODGE_FRONT_DOOR = NavigationTemplate.SKII_LODGE_FRONT_DOOR
-    SKII_VILLAGE_TREE = NavigationTemplate.SKII_VILLAGE_TREE
-    WINTER_SPORT_DOOR_SKII_VILLAGE = NavigationTemplate.WINTER_SPORT_DOOR_SKII_VILLAGE
-    MULLET_HEAD_SKII_LODGE = NavigationTemplate.MULLET_HEAD_SKII_LODGE
-    SKII_LODGE_STAIRS = NavigationTemplate.SKII_LODGE_STAIRS
-    SKII_LODGE_ATTIC_HORSE_HEAD = NavigationTemplate.SKII_LODGE_ATTIC_HORSE_HEAD
-    SPORT_SHOP_SURF_IMAGE = NavigationTemplate.SPORT_SHOP_SURF_IMAGE
+    # Skii Lodge templates
+    SKII_LODGE_FRONT_DOOR = SkiiLodgeTemplate.SKII_LODGE_FRONT_DOOR
+    SKII_VILLAGE_TREE = SkiiLodgeTemplate.SKII_VILLAGE_TREE
+    WINTER_SPORT_DOOR_SKII_VILLAGE = SkiiLodgeTemplate.WINTER_SPORT_DOOR_SKII_VILLAGE
+    MULLET_HEAD_SKII_LODGE = SkiiLodgeTemplate.MULLET_HEAD_SKII_LODGE
+    SKII_LODGE_STAIRS = SkiiLodgeTemplate.SKII_LODGE_STAIRS
+    SKII_LODGE_ATTIC_HORSE_HEAD = SkiiLodgeTemplate.SKII_LODGE_ATTIC_HORSE_HEAD
+    SPORT_SHOP_SURF_IMAGE = SkiiLodgeTemplate.SPORT_SHOP_SURF_IMAGE
 
-    SPY_PHONE = NavigationTemplate.SPY_PHONE
-    SPY_PHONE_VISIT_HQ_BUTTON = NavigationTemplate.SPY_PHONE_VISIT_HQ_BUTTON
-    SPY_HEADQUARTERS_KEYBOARD = NavigationTemplate.SPY_HEADQUARTERS_KEYBOARD
+    # Spy Headquarters templates
+    SPY_PHONE = SpyHeadquartersTemplate.SPY_PHONE
+    SPY_PHONE_VISIT_HQ_BUTTON = SpyHeadquartersTemplate.SPY_PHONE_VISIT_HQ_BUTTON
+    SPY_HEADQUARTERS_KEYBOARD = SpyHeadquartersTemplate.SPY_HEADQUARTERS_KEYBOARD
 
-    COFFEE_SHOP_DOOR = NavigationTemplate.COFFEE_SHOP_DOOR
-    COFFEE_SHOP_EXIT_SIGN = NavigationTemplate.COFFEE_SHOP_EXIT_SIGN
-    COFFEE_SHOP_BOTTOM_LEFT_SEGMENT = NavigationTemplate.COFFEE_SHOP_BOTTOM_LEFT_SEGMENT
-    COFFEE_SHOP_STAIRS_TO_BOOK_ROOM = NavigationTemplate.COFFEE_SHOP_STAIRS_TO_BOOK_ROOM
-    BOOK_ROOM_TOP_SHELF = NavigationTemplate.BOOK_ROOM_TOP_SHELF
+    # Coffee Shop templates
+    COFFEE_SHOP_DOOR = CoffeeShopTemplate.COFFEE_SHOP_DOOR
+    COFFEE_SHOP_EXIT_SIGN = CoffeeShopTemplate.COFFEE_SHOP_EXIT_SIGN
+    COFFEE_SHOP_BOTTOM_LEFT_SEGMENT = CoffeeShopTemplate.COFFEE_SHOP_BOTTOM_LEFT_SEGMENT
+    COFFEE_SHOP_STAIRS_TO_BOOK_ROOM = CoffeeShopTemplate.COFFEE_SHOP_STAIRS_TO_BOOK_ROOM
+    BOOK_ROOM_TOP_SHELF = CoffeeShopTemplate.BOOK_ROOM_TOP_SHELF
 
-    GIFT_SHOP_FRONT_DOOR = NavigationTemplate.GIFT_SHOP_FRONT_DOOR
-    GIFT_SHOP_POSTER = NavigationTemplate.GIFT_SHOP_POSTER
-    GIFT_SHOP_TO_OFFICE_DOOR = NavigationTemplate.GIFT_SHOP_TO_OFFICE_DOOR
-    GIFT_SHOP_OFFICE_ROOF_SIGN = NavigationTemplate.GIFT_SHOP_OFFICE_ROOF_SIGN
+    # Gift Shop templates
+    GIFT_SHOP_FRONT_DOOR = GiftShopTemplate.GIFT_SHOP_FRONT_DOOR
+    GIFT_SHOP_POSTER = GiftShopTemplate.GIFT_SHOP_POSTER
+    GIFT_SHOP_TO_OFFICE_DOOR = GiftShopTemplate.GIFT_SHOP_TO_OFFICE_DOOR
+    GIFT_SHOP_OFFICE_ROOF_SIGN = GiftShopTemplate.GIFT_SHOP_OFFICE_ROOF_SIGN
 
-    NIGHT_CLUB_FRONT_DOOR = NavigationTemplate.NIGHT_CLUB_FRONT_DOOR
-    NIGHT_CLUB_SPEAKER = NavigationTemplate.NIGHT_CLUB_SPEAKER
-    NIGHT_CLUB_BOTTOM_LEFT_SEGMENT = NavigationTemplate.NIGHT_CLUB_BOTTOM_LEFT_SEGMENT
-    NIGHT_CLUB_STAIRS_TO_LOUNGE = NavigationTemplate.NIGHT_CLUB_STAIRS_TO_LOUNGE
-    LOUNGE_OVERHEAD_TV_CABLES = NavigationTemplate.LOUNGE_OVERHEAD_TV_CABLES
+    # Night Club templates
+    NIGHT_CLUB_FRONT_DOOR = NightClubTemplate.NIGHT_CLUB_FRONT_DOOR
+    NIGHT_CLUB_SPEAKER = NightClubTemplate.NIGHT_CLUB_SPEAKER
+    NIGHT_CLUB_BOTTOM_LEFT_SEGMENT = NightClubTemplate.NIGHT_CLUB_BOTTOM_LEFT_SEGMENT
+    NIGHT_CLUB_STAIRS_TO_LOUNGE = NightClubTemplate.NIGHT_CLUB_STAIRS_TO_LOUNGE
+    LOUNGE_OVERHEAD_TV_CABLES = NightClubTemplate.LOUNGE_OVERHEAD_TV_CABLES
 
-    TOUR_HQ_FRONT_DOOR = NavigationTemplate.TOUR_HQ_FRONT_DOOR
-    TOUR_HQ_CALENDAR = NavigationTemplate.TOUR_HQ_CALENDAR
-    TOUR_HQ_STAIRS_TO_ROOF = NavigationTemplate.TOUR_HQ_STAIRS_TO_ROOF
-    TOUR_HQ_LOOKOUT_WALL_ART = NavigationTemplate.TOUR_HQ_LOOKOUT_WALL_ART
+    # Tour HQ templates
+    TOUR_HQ_FRONT_DOOR = TourHQTemplate.TOUR_HQ_FRONT_DOOR
+    TOUR_HQ_CALENDAR = TourHQTemplate.TOUR_HQ_CALENDAR
+    TOUR_HQ_STAIRS_TO_ROOF = TourHQTemplate.TOUR_HQ_STAIRS_TO_ROOF
+    TOUR_HQ_LOOKOUT_WALL_ART = TourHQTemplate.TOUR_HQ_LOOKOUT_WALL_ART
 
-    PET_SHOP_FRONT_DOOR = NavigationTemplate.PET_SHOP_FRONT_DOOR
-    PET_SHOP_EXIT_SIGN = NavigationTemplate.PET_SHOP_EXIT_SIGN
-    PET_SHOP_DOOR_TO_PUFFLE_PARK = NavigationTemplate.PET_SHOP_DOOR_TO_PUFFLE_PARK
-    PUFFLE_PARK_BUSH_O = NavigationTemplate.PUFFLE_PARK_BUSH_O
+    # Pet Shop templates
+    PET_SHOP_FRONT_DOOR = PetShopTemplate.PET_SHOP_FRONT_DOOR
+    PET_SHOP_EXIT_SIGN = PetShopTemplate.PET_SHOP_EXIT_SIGN
+    PET_SHOP_DOOR_TO_PUFFLE_PARK = PetShopTemplate.PET_SHOP_DOOR_TO_PUFFLE_PARK
+    PUFFLE_PARK_BUSH_O = PetShopTemplate.PUFFLE_PARK_BUSH_O
 
-    THE_STAGE_FRONT_DOOR = NavigationTemplate.THE_STAGE_FRONT_DOOR
-    THE_STAGE_CEILING_ART = NavigationTemplate.THE_STAGE_CEILING_ART
+    # Stage templates
+    THE_STAGE_FRONT_DOOR = StageTemplate.THE_STAGE_FRONT_DOOR
+    THE_STAGE_CEILING_ART = StageTemplate.THE_STAGE_CEILING_ART
 
-    PIZZA_PARLOR_FRONT_DOOR = NavigationTemplate.PIZZA_PARLOR_FRONT_DOOR
-    PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY = NavigationTemplate.PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY
-    PIZZA_PARLOR_FISH_DISH_MENU = NavigationTemplate.PIZZA_PARLOR_FISH_DISH_MENU
+    # Pizza Parlor templates
+    PIZZA_PARLOR_FRONT_DOOR = PizzaParlorTemplate.PIZZA_PARLOR_FRONT_DOOR
+    PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY = PizzaParlorTemplate.PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY
+    PIZZA_PARLOR_PIZZA_OVEN = PizzaParlorTemplate.PIZZA_PARLOR_PIZZA_OVEN
+    PIZZA_PARLOR_FISH_DISH_MENU = PizzaParlorTemplate.PIZZA_PARLOR_FISH_DISH_MENU
 
     # Pizza Oven templates
-    PIZZA_PARLOR_PIZZA_OVEN = PizzaOvenTemplate.PIZZA_PARLOR_PIZZA_OVEN
     PIZZA_OVEN_START_BUTTON = PizzaOvenTemplate.PIZZA_OVEN_START_BUTTON
     PIZZA_OVEN_REPLAY_ORDER_BUTTON = PizzaOvenTemplate.PIZZA_OVEN_REPLAY_ORDER_BUTTON
     PIZZA_OVEN_GAME_COLLECT_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_GAME_COLLECT_PIZZA
@@ -137,7 +155,16 @@ __all__ = [
     "LoginTemplate",
     "UITemplate",
     "MapTemplate",
-    "NavigationTemplate",
+    "BeachTemplate",
+    "SkiiLodgeTemplate",
+    "SpyHeadquartersTemplate",
+    "CoffeeShopTemplate",
+    "GiftShopTemplate",
+    "NightClubTemplate",
+    "TourHQTemplate",
+    "PetShopTemplate",
+    "StageTemplate",
+    "PizzaParlorTemplate",
     "PizzaOvenTemplate",
     "DojoTemplate",
     "MineTemplate",

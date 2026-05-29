@@ -2,7 +2,6 @@ from enum import StrEnum
 
 
 class PizzaOvenTemplate(StrEnum):
-    PIZZA_PARLOR_PIZZA_OVEN = "pizza_oven/pizza-parlor-pizza-oven.png"
     PIZZA_OVEN_START_BUTTON = "pizza_oven/pizza-oven-start-button.png"
     PIZZA_OVEN_REPLAY_ORDER_BUTTON = "pizza_oven/pizza-oven-replay-order-button.png"
     PIZZA_OVEN_GAME_COLLECT_PIZZA = "pizza_oven/pizza-oven-game-collect-pizza.png"
