@@ -155,9 +155,6 @@ def main():
         bot.login(username=user, password=password, server=server)
         while True:
             PizzaOvenGameAction(bot).run()
-            play_again = input("Play again? (y/N): ").strip().lower()
-            if play_again != "y":
-                break
 
 
 if __name__ == "__main__":
