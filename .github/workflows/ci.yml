@@ -33,3 +33,6 @@ jobs:
 
       - name: Lint check
         run: bash scripts/lint-check.sh
+
+      - name: Unit tests
+        run: bash scripts/run-tests.sh
