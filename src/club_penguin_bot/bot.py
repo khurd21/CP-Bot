@@ -79,44 +79,10 @@ class Bot:
         if self.page is None:
             raise ValueError("Page cannot be None.")
 
-        emote_to_keybinding = {
-            Emote.CAKE: ["e", "k"],
-            Emote.COFFEE_CUP: ["e", "c"],
-            Emote.CROOKED_FACE: ["e", "u"],
-            Emote.DANCE: ["d"],
-            Emote.FART: ["e", "t"],
-            Emote.FLOWER: ["e", "f"],
-            Emote.FROWN: ["e", "4"],
-            Emote.GAME: ["e", "g"],
-            Emote.GOOD_LUCK: ["e", "l"],
-            Emote.GREEN_SICKLY_FACE: ["e", "8"],
-            Emote.HEART: ["e", "h"],
-            Emote.ICE_CREAM: ["e", "q"],
-            Emote.LAUGHING_FACE: ["e", "1"],
-            Emote.LIGHT_BULB: ["e", "b"],
-            Emote.PIZZA: ["e", "z"],
-            Emote.POPCORN: ["e", "o"],
-            Emote.RED_ANGRY_FACE: ["e", "9"],
-            Emote.SAD_FACE: ["e", "0"],
-            Emote.SMILEY: ["e", "2"],
-            Emote.STICKING_OUT_TONGUE: ["e", "6"],
-            Emote.STRAIGHT_FACE: ["e", "3"],
-            Emote.SURPRISE: ["e", "5"],
-            Emote.WAVE: ["w"],
-            Emote.WINK: ["e", "7"],
-            Emote.SIT_LEFT: ["s", "ArrowLeft"],
-            Emote.SIT_RIGHT: ["s", "ArrowRight"],
-            Emote.SIT_FORWARD: ["s", "ArrowDown"],
-            Emote.SIT_BACKWARD: ["s", "ArrowUp"],
-        }
-
-        if emote not in emote_to_keybinding:
-            raise ValueError(f"Emote {emote.value} not found in emote list.")
-
-        for key in emote_to_keybinding[emote]:
+        for key in emote.value:
             self.page.keyboard.down(key)
 
-        for key in emote_to_keybinding[emote]:
+        for key in emote.value:
             self.page.keyboard.up(key)
 
         self.page.wait_for_timeout(delay)
