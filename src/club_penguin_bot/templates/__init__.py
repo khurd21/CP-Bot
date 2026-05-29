@@ -1,0 +1,145 @@
+from enum import StrEnum
+
+from club_penguin_bot.templates.login import LoginTemplate
+from club_penguin_bot.templates.ui import UITemplate
+from club_penguin_bot.templates.map import MapTemplate
+from club_penguin_bot.templates.navigation import NavigationTemplate
+from club_penguin_bot.templates.pizza_oven import PizzaOvenTemplate
+from club_penguin_bot.templates.dojo import DojoTemplate
+from club_penguin_bot.templates.mine import MineTemplate
+from club_penguin_bot.templates.snow_forts import SnowFortsTemplate
+
+
+class Template(StrEnum):
+    """Unified template namespace combining all template domains."""
+
+    # Login templates
+    LOGIN_BUTTON_UNHOVERED = LoginTemplate.LOGIN_BUTTON_UNHOVERED
+    LOGIN_PENGUIN_NAME_INPUT_FIELD = LoginTemplate.LOGIN_PENGUIN_NAME_INPUT_FIELD
+    LOGIN_BUTTON_USER_PASSWORD_PAGE = LoginTemplate.LOGIN_BUTTON_USER_PASSWORD_PAGE
+
+    # UI templates
+    MESSAGE_BOX = UITemplate.MESSAGE_BOX
+    SEND_MESSAGE_BUTTON = UITemplate.SEND_MESSAGE_BUTTON
+    YES_BUTTON = UITemplate.YES_BUTTON
+    MAP_BUTTON = UITemplate.MAP_BUTTON
+
+    # Map templates
+    DOJO_COURTYARD_MAP = MapTemplate.DOJO_COURTYARD_MAP
+    FOREST_MAP = MapTemplate.FOREST_MAP
+    ICEBERG_MAP = MapTemplate.ICEBERG_MAP
+    SKII_HILL_MAP = MapTemplate.SKII_HILL_MAP
+    SKII_VILLAGE_MAP = MapTemplate.SKII_VILLAGE_MAP
+    SNOW_FORTS_MAP = MapTemplate.SNOW_FORTS_MAP
+    STADIUM_MAP = MapTemplate.STADIUM_MAP
+    THE_BEACH_MAP = MapTemplate.THE_BEACH_MAP
+    THE_COVE_MAP = MapTemplate.THE_COVE_MAP
+    THE_DOCK_MAP = MapTemplate.THE_DOCK_MAP
+    THE_PLAZA_MAP = MapTemplate.THE_PLAZA_MAP
+    MINE_MAP = MapTemplate.MINE_MAP
+    THE_TOWN_MAP = MapTemplate.THE_TOWN_MAP
+    WELCOME_ROOM_MAP = MapTemplate.WELCOME_ROOM_MAP
+
+    # Navigation templates
+    ROCK_THE_BEACH = NavigationTemplate.ROCK_THE_BEACH
+    LIGHT_ABOVE_DOOR_THE_BEACH = NavigationTemplate.LIGHT_ABOVE_DOOR_THE_BEACH
+    SEVEN_LIGHTHOUSE = NavigationTemplate.SEVEN_LIGHTHOUSE
+    TO_TOP_SIGN_LIGHTHOUSE = NavigationTemplate.TO_TOP_SIGN_LIGHTHOUSE
+    TELESCOPE_BEACON = NavigationTemplate.TELESCOPE_BEACON
+
+    SKII_LODGE_FRONT_DOOR = NavigationTemplate.SKII_LODGE_FRONT_DOOR
+    SKII_VILLAGE_TREE = NavigationTemplate.SKII_VILLAGE_TREE
+    WINTER_SPORT_DOOR_SKII_VILLAGE = NavigationTemplate.WINTER_SPORT_DOOR_SKII_VILLAGE
+    MULLET_HEAD_SKII_LODGE = NavigationTemplate.MULLET_HEAD_SKII_LODGE
+    SKII_LODGE_STAIRS = NavigationTemplate.SKII_LODGE_STAIRS
+    SKII_LODGE_ATTIC_HORSE_HEAD = NavigationTemplate.SKII_LODGE_ATTIC_HORSE_HEAD
+    SPORT_SHOP_SURF_IMAGE = NavigationTemplate.SPORT_SHOP_SURF_IMAGE
+
+    SPY_PHONE = NavigationTemplate.SPY_PHONE
+    SPY_PHONE_VISIT_HQ_BUTTON = NavigationTemplate.SPY_PHONE_VISIT_HQ_BUTTON
+    SPY_HEADQUARTERS_KEYBOARD = NavigationTemplate.SPY_HEADQUARTERS_KEYBOARD
+
+    COFFEE_SHOP_DOOR = NavigationTemplate.COFFEE_SHOP_DOOR
+    COFFEE_SHOP_EXIT_SIGN = NavigationTemplate.COFFEE_SHOP_EXIT_SIGN
+    COFFEE_SHOP_BOTTOM_LEFT_SEGMENT = NavigationTemplate.COFFEE_SHOP_BOTTOM_LEFT_SEGMENT
+    COFFEE_SHOP_STAIRS_TO_BOOK_ROOM = NavigationTemplate.COFFEE_SHOP_STAIRS_TO_BOOK_ROOM
+    BOOK_ROOM_TOP_SHELF = NavigationTemplate.BOOK_ROOM_TOP_SHELF
+
+    GIFT_SHOP_FRONT_DOOR = NavigationTemplate.GIFT_SHOP_FRONT_DOOR
+    GIFT_SHOP_POSTER = NavigationTemplate.GIFT_SHOP_POSTER
+    GIFT_SHOP_TO_OFFICE_DOOR = NavigationTemplate.GIFT_SHOP_TO_OFFICE_DOOR
+    GIFT_SHOP_OFFICE_ROOF_SIGN = NavigationTemplate.GIFT_SHOP_OFFICE_ROOF_SIGN
+
+    NIGHT_CLUB_FRONT_DOOR = NavigationTemplate.NIGHT_CLUB_FRONT_DOOR
+    NIGHT_CLUB_SPEAKER = NavigationTemplate.NIGHT_CLUB_SPEAKER
+    NIGHT_CLUB_BOTTOM_LEFT_SEGMENT = NavigationTemplate.NIGHT_CLUB_BOTTOM_LEFT_SEGMENT
+    NIGHT_CLUB_STAIRS_TO_LOUNGE = NavigationTemplate.NIGHT_CLUB_STAIRS_TO_LOUNGE
+    LOUNGE_OVERHEAD_TV_CABLES = NavigationTemplate.LOUNGE_OVERHEAD_TV_CABLES
+
+    TOUR_HQ_FRONT_DOOR = NavigationTemplate.TOUR_HQ_FRONT_DOOR
+    TOUR_HQ_CALENDAR = NavigationTemplate.TOUR_HQ_CALENDAR
+    TOUR_HQ_STAIRS_TO_ROOF = NavigationTemplate.TOUR_HQ_STAIRS_TO_ROOF
+    TOUR_HQ_LOOKOUT_WALL_ART = NavigationTemplate.TOUR_HQ_LOOKOUT_WALL_ART
+
+    PET_SHOP_FRONT_DOOR = NavigationTemplate.PET_SHOP_FRONT_DOOR
+    PET_SHOP_EXIT_SIGN = NavigationTemplate.PET_SHOP_EXIT_SIGN
+    PET_SHOP_DOOR_TO_PUFFLE_PARK = NavigationTemplate.PET_SHOP_DOOR_TO_PUFFLE_PARK
+    PUFFLE_PARK_BUSH_O = NavigationTemplate.PUFFLE_PARK_BUSH_O
+
+    THE_STAGE_FRONT_DOOR = NavigationTemplate.THE_STAGE_FRONT_DOOR
+    THE_STAGE_CEILING_ART = NavigationTemplate.THE_STAGE_CEILING_ART
+
+    PIZZA_PARLOR_FRONT_DOOR = NavigationTemplate.PIZZA_PARLOR_FRONT_DOOR
+    PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY = NavigationTemplate.PIZZA_PARLOR_FRONT_DOOR_PUFFLE_PARTY
+    PIZZA_PARLOR_FISH_DISH_MENU = NavigationTemplate.PIZZA_PARLOR_FISH_DISH_MENU
+
+    # Pizza Oven templates
+    PIZZA_PARLOR_PIZZA_OVEN = PizzaOvenTemplate.PIZZA_PARLOR_PIZZA_OVEN
+    PIZZA_OVEN_START_BUTTON = PizzaOvenTemplate.PIZZA_OVEN_START_BUTTON
+    PIZZA_OVEN_REPLAY_ORDER_BUTTON = PizzaOvenTemplate.PIZZA_OVEN_REPLAY_ORDER_BUTTON
+    PIZZA_OVEN_GAME_COLLECT_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_GAME_COLLECT_PIZZA
+
+    PIZZA_OVEN_YELLOW_PENGUIN_ASKING_FOR_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_YELLOW_PENGUIN_ASKING_FOR_PIZZA
+    PIZZA_OVEN_GREEN_PENGUIN_ASKING_FOR_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_GREEN_PENGUIN_ASKING_FOR_PIZZA
+    PIZZA_OVEN_PURPLE_PENGUIN_ASKING_FOR_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_PURPLE_PENGUIN_ASKING_FOR_PIZZA
+    PIZZA_OVEN_RED_PENGUIN_ASKING_FOR_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_RED_PENGUIN_ASKING_FOR_PIZZA
+    PIZZA_OVEN_BLUE_PENGUIN_ASKING_FOR_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_BLUE_PENGUIN_ASKING_FOR_PIZZA
+    PIZZA_OVEN_PINK_PENGUIN_ASKING_FOR_PIZZA = PizzaOvenTemplate.PIZZA_OVEN_PINK_PENGUIN_ASKING_FOR_PIZZA
+
+    PIZZA_OVEN_YELLOW_PENGUIN = PizzaOvenTemplate.PIZZA_OVEN_YELLOW_PENGUIN
+    PIZZA_OVEN_GREEN_PENGUIN = PizzaOvenTemplate.PIZZA_OVEN_GREEN_PENGUIN
+    PIZZA_OVEN_PURPLE_PENGUIN = PizzaOvenTemplate.PIZZA_OVEN_PURPLE_PENGUIN
+    PIZZA_OVEN_RED_PENGUIN = PizzaOvenTemplate.PIZZA_OVEN_RED_PENGUIN
+    PIZZA_OVEN_BLUE_PENGUIN = PizzaOvenTemplate.PIZZA_OVEN_BLUE_PENGUIN
+    PIZZA_OVEN_PINK_PENGUIN = PizzaOvenTemplate.PIZZA_OVEN_PINK_PENGUIN
+
+    PIZZA_OVEN_EXIT_GAME_BUTTON = PizzaOvenTemplate.PIZZA_OVEN_EXIT_GAME_BUTTON
+    PIZZA_OVEN_SECOND_EXIT_GAME_BUTTON = PizzaOvenTemplate.PIZZA_OVEN_SECOND_EXIT_GAME_BUTTON
+
+    # Dojo templates
+    DOJO_CARD_JITSU_SIGN = DojoTemplate.DOJO_CARD_JITSU_SIGN
+    DOJO_COURTYARD_ABOVE_DOOR = DojoTemplate.DOJO_COURTYARD_ABOVE_DOOR
+
+    # Mine templates
+    MINE_SHACK_TO_MINE = MineTemplate.MINE_SHACK_TO_MINE
+    MINE_SHACK_TO_RECYCLING_PLANT = MineTemplate.MINE_SHACK_TO_RECYCLING_PLANT
+    MINE_SIGN = MineTemplate.MINE_SIGN
+    RECYCLING_PLANT_FIRE_ALARM = MineTemplate.RECYCLING_PLANT_FIRE_ALARM
+    MINE_TO_CAVE_MINE = MineTemplate.MINE_TO_CAVE_MINE
+    CAVE_MINE_HARD_HAT = MineTemplate.CAVE_MINE_HARD_HAT
+
+    # Snow Forts templates
+    SNOW_FORTS_CLOCK_TARGET = SnowFortsTemplate.SNOW_FORTS_CLOCK_TARGET
+
+
+__all__ = [
+    "Template",
+    "LoginTemplate",
+    "UITemplate",
+    "MapTemplate",
+    "NavigationTemplate",
+    "PizzaOvenTemplate",
+    "DojoTemplate",
+    "MineTemplate",
+    "SnowFortsTemplate",
+]
