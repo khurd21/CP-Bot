@@ -72,6 +72,41 @@ class Vision:
         height, width = template.shape[:2]
         return (max_loc[0] + width // 2, max_loc[1] + height // 2)
 
+    def find_template_matches_in(
+        self,
+        screen: np.ndarray,
+        template_name: Template,
+        threshold: float = 0.85,
+        grayscale: bool = False,
+    ) -> list[tuple[int, int, int, int, float]]:
+        template = self._read_template(template_name)
+
+        match_screen = screen
+        match_template = template
+        if grayscale:
+            match_screen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
+            match_template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+
+        result = cv2.matchTemplate(match_screen, match_template, cv2.TM_CCOEFF_NORMED)
+        template_h, template_w = template.shape[:2]
+        matches: list[tuple[int, int, int, int, float]] = []
+
+        while True:
+            _, max_val, _, max_loc = cv2.minMaxLoc(result)
+            if max_val < threshold:
+                break
+
+            x, y = max_loc
+            matches.append((x, y, template_w, template_h, float(max_val)))
+
+            x0 = max(0, x - template_w // 2)
+            y0 = max(0, y - template_h // 2)
+            x1 = min(result.shape[1], x + template_w // 2)
+            y1 = min(result.shape[0], y + template_h // 2)
+            result[y0:y1, x0:x1] = -1.0
+
+        return matches
+
     @retry(
         retry=retry_if_result(lambda result: result is None),
         stop=stop_after_attempt(3),

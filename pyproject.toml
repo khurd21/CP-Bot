@@ -28,6 +28,7 @@ packages = [{ include = "club_penguin_bot", from = "src" }]
 cpb-pizza-oven = "club_penguin_bot.actions.pizza_oven_game_action:main"
 cpb-order = "club_penguin_bot.actions.order_action:main"
 cpb-throw-snowball = "club_penguin_bot.actions.throw_snowball_at_clock_action:main"
+cpb-card-jitsu = "club_penguin_bot.actions.card_jitsu_action:main"
 
 [tool.black]
 line-length = 300

@@ -43,8 +43,25 @@ class Bot:
     def find_template_in(self, screen: np.ndarray, template_name: Template, threshold: float = 0.85) -> Optional[tuple[int, int]]:
         return self._require_vision().find_template_in(screen, template_name, threshold=threshold)
 
+    def find_template_matches_in(
+        self,
+        screen: np.ndarray,
+        template_name: Template,
+        threshold: float = 0.85,
+        grayscale: bool = False,
+    ) -> list[tuple[int, int, int, int, float]]:
+        return self._require_vision().find_template_matches_in(
+            screen,
+            template_name,
+            threshold=threshold,
+            grayscale=grayscale,
+        )
+
     def find_template_retry(self, template_name: Template, threshold: float = 0.85) -> Optional[tuple[int, int]]:
         return self._require_vision().find_template_retry(template_name, threshold=threshold)
+
+    def find_text_retry(self, target_name: str) -> Optional[tuple[int, int]]:
+        return self._require_vision().find_text_retry(target_name)
 
     def click_template(self, template_name: Template, delay: int = 500) -> bool:
         if self.page is None:
